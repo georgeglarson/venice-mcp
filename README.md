@@ -1,6 +1,7 @@
 # Venice MCP Server
 
 [![npm version](https://badge.fury.io/js/venice-mcp.svg)](https://www.npmjs.com/package/venice-mcp)
+[![CI](https://github.com/georgeglarson/venice-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/georgeglarson/venice-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP](https://img.shields.io/badge/MCP-1.12.0-blue)](https://modelcontextprotocol.io)
 
@@ -69,7 +70,7 @@ Restart Claude Desktop. You'll see Venice tools available in the 🔧 menu.
 |------|-------------|
 | `venice_list_models` | List available models (text, image, code) |
 | `venice_list_characters` | List character personas |
-| `venice_list_image_styles` | List image style presets |
+
 
 ### Account Management
 
@@ -109,11 +110,36 @@ Run `venice_list_models` to see all currently available models.
 - Node.js 18+
 - Venice AI API key
 
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/georgeglarson/venice-mcp.git
+cd venice-mcp
+npm install
+npm run build
+```
+
+### Testing
+
+```bash
+npm test              # Run tests
+npm run test:watch    # Watch mode
+npm run test:coverage # Coverage report
+```
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## Links
 
 - [Venice AI](https://venice.ai) - Platform home
 - [Venice API Docs](https://docs.venice.ai) - API reference
 - [MCP Documentation](https://modelcontextprotocol.io) - Protocol spec
+- [GitHub Repository](https://github.com/georgeglarson/venice-mcp)
+- [Changelog](CHANGELOG.md)
 
 ## License
 

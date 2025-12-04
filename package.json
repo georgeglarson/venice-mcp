@@ -1,6 +1,6 @@
 {
   "name": "venice-mcp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MCP server for Venice AI - chat, images, TTS, embeddings, and account management",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,11 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "start": "node dist/index.js",
-    "prepublishOnly": "npm run build"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm test"
   },
   "keywords": [
     "mcp",
@@ -39,7 +43,13 @@
     "deepseek",
     "qwen",
     "ai-tools",
-    "generative-ai"
+    "generative-ai",
+    "mcp-server",
+    "uncensored",
+    "privacy",
+    "open-models",
+    "sdk",
+    "typescript"
   ],
   "author": "glitchenstein",
   "license": "MIT",
@@ -61,6 +71,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
-    "typescript": "^5.7.2"
+    "@vitest/ui": "^4.0.15",
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.15"
   }
 }
