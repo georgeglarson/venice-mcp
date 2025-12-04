@@ -1,52 +1,39 @@
-# Venice AI MCP Server
+# Venice MCP Server
 
-[![npm version](https://badge.fury.io/js/%40anthropic-ai%2Fvenice-mcp.svg)](https://www.npmjs.com/package/venice-mcp)
+[![npm version](https://badge.fury.io/js/venice-mcp.svg)](https://www.npmjs.com/package/venice-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP](https://img.shields.io/badge/MCP-1.12.0-blue)](https://modelcontextprotocol.io)
 
-A Model Context Protocol (MCP) server that provides seamless integration with the [Venice AI](https://venice.ai) platform. This server enables AI assistants like Claude to access Venice AI's full suite of capabilities including chat, image generation, text-to-speech, embeddings, and administrative functions.
+A [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server for [Venice AI](https://venice.ai). Gives AI assistants like Claude access to Venice's text generation, image creation, text-to-speech, embeddings, and account management APIs.
 
-## Features
+## What It Does
 
-- **Chat Completion** - Access Venice AI's language models including Llama, DeepSeek, Qwen, and more
-- **Image Generation** - Create images with Stable Diffusion, FLUX, and other models
-- **Image Upscaling** - Enhance and upscale images with AI
-- **Text-to-Speech** - Convert text to natural-sounding audio
-- **Embeddings** - Generate text embeddings for semantic search and RAG
-- **Model Discovery** - List available text and image models
-- **Character Personas** - Access Venice AI's character library
-- **Style Presets** - Browse 60+ image generation styles
-- **API Key Management** - Create, list, and delete API keys (admin)
-- **Rate Limits** - Monitor usage and rate limits (admin)
+This MCP server lets Claude (or any MCP-compatible assistant) use Venice AI's features directly:
 
-## Installation
+- **Chat** with Llama, DeepSeek, Qwen, and other open models
+- **Generate images** using Stable Diffusion, FLUX, and more
+- **Create speech** from text with natural-sounding voices
+- **Generate embeddings** for search and RAG applications
+- **Manage API keys** and monitor rate limits
 
-### Via npm (recommended)
+## Quick Start
+
+### 1. Get a Venice API Key
+
+Sign up at [venice.ai](https://venice.ai) and create an API key in [Settings → API](https://venice.ai/settings/api).
+
+### 2. Install
 
 ```bash
 npm install -g venice-mcp
 ```
 
-### From source
+### 3. Configure Claude Desktop
 
-```bash
-git clone https://github.com/anthropics/venice-mcp.git
-cd venice-mcp
-npm install
-npm run build
-```
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `VENICE_API_KEY` | Yes | Your Venice AI API key ([Get one here](https://venice.ai/settings/api)) |
-
-### Claude Desktop
-
-Add to your Claude Desktop configuration (`~/.config/Claude/claude_desktop_config.json` on Linux/macOS or `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+Add to your config file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
@@ -62,142 +49,72 @@ Add to your Claude Desktop configuration (`~/.config/Claude/claude_desktop_confi
 }
 ```
 
-### Running Manually
-
-```bash
-export VENICE_API_KEY="your-api-key-here"
-node dist/index.js
-```
+Restart Claude Desktop. You'll see Venice tools available in the 🔧 menu.
 
 ## Available Tools
 
-### Inference Tools
+### Generation
 
 | Tool | Description |
 |------|-------------|
-| `venice_chat` | Send messages to Venice AI language models |
-| `venice_generate_image` | Generate images from text prompts |
+| `venice_chat` | Chat with Venice AI language models |
+| `venice_generate_image` | Generate images from text descriptions |
 | `venice_upscale_image` | Upscale and enhance images |
-| `venice_text_to_speech` | Convert text to audio |
+| `venice_text_to_speech` | Convert text to spoken audio |
 | `venice_create_embeddings` | Generate text embeddings |
 
-### Discovery Tools
+### Discovery
 
 | Tool | Description |
 |------|-------------|
-| `venice_list_models` | List available AI models (text/image/code) |
-| `venice_list_characters` | List Venice AI character personas |
-| `venice_list_image_styles` | List available image style presets |
+| `venice_list_models` | List available models (text, image, code) |
+| `venice_list_characters` | List character personas |
+| `venice_list_image_styles` | List image style presets |
 
-### Admin Tools (requires Admin API key)
+### Account Management
+
+Requires an admin-level API key:
 
 | Tool | Description |
 |------|-------------|
-| `venice_list_api_keys` | List all API keys on account |
+| `venice_list_api_keys` | List all API keys |
 | `venice_create_api_key` | Create a new API key |
-| `venice_retrieve_api_key` | Get details for a specific key |
+| `venice_retrieve_api_key` | Get details for a key |
 | `venice_delete_api_key` | Delete an API key |
-| `venice_get_rate_limits` | Get current rate limits and usage |
-| `venice_get_rate_limit_logs` | Get rate limit history logs |
+| `venice_get_rate_limits` | View rate limits and usage |
+| `venice_get_rate_limit_logs` | View rate limit history |
 
-## Usage Examples
+## Examples
 
-### Chat with an AI model
+**Ask Claude to generate an image:**
+> "Use Venice to create an image of a sunset over mountains"
 
-```
-User: Use Venice to ask Llama about quantum computing
-Claude: [uses venice_chat tool]
-```
+**Chat with a specific model:**
+> "Ask Venice's DeepSeek model to explain quantum computing"
 
-### Generate an image
-
-```
-User: Generate a cyberpunk cityscape with Venice AI
-Claude: [uses venice_generate_image tool]
-```
-
-### Text-to-speech
-
-```
-User: Convert "Hello world" to speech using Venice
-Claude: [uses venice_text_to_speech tool]
-```
-
-### Manage API keys
-
-```
-User: Show me my Venice API keys
-Claude: [uses venice_list_api_keys tool]
-```
+**Check your usage:**
+> "Show my Venice API rate limits"
 
 ## Supported Models
 
-### Language Models
-- Llama 3.3 70B, Llama 3.2 3B
-- DeepSeek R1, DeepSeek v3.2
-- Qwen 3 (4B, 235B, Coder 480B)
-- Mistral 31 24B
-- Google Gemma 3 27B
-- Grok 41 Fast
-- And more...
+**Language Models**: Llama 3.3 70B, DeepSeek R1, Qwen 3, Mistral, and more  
+**Image Models**: Stable Diffusion 3.5, FLUX, Fluently XL  
+**Embeddings**: BGE-M3 (1024 dimensions)  
+**TTS**: Kokoro with multiple voice options
 
-### Image Models
-- Venice SD35
-- HiDream
-- Nano Banana Pro
-- Qwen Image
-- WAI Illustrious
-
-### Embedding Models
-- BGE-M3 (1024 dimensions)
-
-### TTS Models
-- Kokoro TTS (multiple voices)
-
-## Test Results
-
-All tools have been tested and verified working:
-
-```
-✅ venice_chat - Successful response from llama-3.3-70b
-✅ venice_generate_image - Generated image with venice-sd35
-✅ venice_upscale_image - Ready (requires base64 input)
-✅ venice_text_to_speech - Generated 41KB MP3 audio
-✅ venice_create_embeddings - Generated 1024-dim vectors
-✅ venice_list_models - Listed 19 text + 7 image models
-✅ venice_list_characters - Listed Venice AI personas
-✅ venice_list_image_styles - Listed 67+ style presets
-✅ venice_list_api_keys - Listed account API keys
-✅ venice_create_api_key - Created test key successfully
-✅ venice_retrieve_api_key - Ready
-✅ venice_delete_api_key - Deleted test key successfully
-✅ venice_get_rate_limits - Retrieved full rate limit data
-✅ venice_get_rate_limit_logs - Ready
-```
+Run `venice_list_models` to see all currently available models.
 
 ## Requirements
 
 - Node.js 18+
 - Venice AI API key
-- For admin tools: Admin-level API key
 
 ## Links
 
-- [Venice AI Platform](https://venice.ai)
-- [Venice AI API Documentation](https://docs.venice.ai)
-- [Model Context Protocol](https://modelcontextprotocol.io)
-- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
+- [Venice AI](https://venice.ai) - Platform home
+- [Venice API Docs](https://docs.venice.ai) - API reference
+- [MCP Documentation](https://modelcontextprotocol.io) - Protocol spec
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## Support
-
-For Venice AI platform support: [support@venice.ai](mailto:support@venice.ai)
-
-For MCP server issues: Open a GitHub issue
+MIT - see [LICENSE](LICENSE)

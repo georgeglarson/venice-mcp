@@ -1,7 +1,7 @@
 {
   "name": "venice-mcp",
   "version": "1.0.0",
-  "description": "Official Model Context Protocol (MCP) server for Venice AI - enables AI assistants to use Venice's chat, image generation, text-to-speech, embeddings, and admin APIs",
+  "description": "MCP server for Venice AI - chat, images, TTS, embeddings, and account management",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
