@@ -17,9 +17,10 @@ describe('Venice MCP Tools Integration', () => {
     });
 
     it('should have correct tool schemas', () => {
+      // Updated to reflect correct API parameters
       const toolSchemas = {
         venice_chat: ['model', 'message', 'system_prompt', 'temperature', 'max_tokens'],
-        venice_generate_image: ['prompt', 'model', 'width', 'height', 'style_preset', 'negative_prompt'],
+        venice_generate_image: ['prompt', 'model', 'size', 'style_preset', 'negative_prompt'],  // Fixed: size not width/height
         venice_text_to_speech: ['text', 'model', 'voice'],
         venice_create_embeddings: ['input', 'model'],
       };
@@ -28,6 +29,11 @@ describe('Venice MCP Tools Integration', () => {
         expect(params.length).toBeGreaterThan(0);
         expect(toolName).toMatch(/^venice_/);
       });
+      
+      // Explicitly verify image generation uses size, not width/height
+      expect(toolSchemas.venice_generate_image).toContain('size');
+      expect(toolSchemas.venice_generate_image).not.toContain('width');
+      expect(toolSchemas.venice_generate_image).not.toContain('height');
     });
   });
 
