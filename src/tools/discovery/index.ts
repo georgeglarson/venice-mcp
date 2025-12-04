@@ -7,11 +7,11 @@ export function registerDiscoveryTools(server: McpServer): void {
   // List models tool
   server.tool(
     "venice_list_models",
-    "List available Venice AI models (text, image, code, embedding)",
-    { type: z.enum(["text", "image", "code", "embedding", "all"]).optional().default("all").describe("Filter by model type") },
+    "List available Venice AI models by type",
+    { type: z.enum(["text", "image", "embedding", "tts", "asr", "upscale", "inpaint", "video", "all"]).optional().default("all").describe("Filter by model type (text, image, embedding, tts, asr, upscale, inpaint, video, or all)") },
     async ({ type }) => {
-      // Pass type parameter to API endpoint (API returns text models by default without it)
-      const endpoint = type === "all" ? "/models" : `/models?type=${type}`;
+      // Always pass type parameter - API may return only text models without it
+      const endpoint = `/models?type=${type}`;
       const response = await veniceAPI(endpoint);
       const data = await response.json() as ModelsResponse;
       if (!response.ok) return { content: [{ type: "text" as const, text: `Error: ${data.error?.message || response.statusText}` }] };
