@@ -10,11 +10,12 @@ export function registerDiscoveryTools(server: McpServer): void {
     "List available Venice AI models (text, image, code, embedding)",
     { type: z.enum(["text", "image", "code", "embedding", "all"]).optional().default("all").describe("Filter by model type") },
     async ({ type }) => {
-      const response = await veniceAPI("/models");
+      // Pass type parameter to API endpoint (API returns text models by default without it)
+      const endpoint = type === "all" ? "/models" : `/models?type=${type}`;
+      const response = await veniceAPI(endpoint);
       const data = await response.json() as ModelsResponse;
       if (!response.ok) return { content: [{ type: "text" as const, text: `Error: ${data.error?.message || response.statusText}` }] };
-      let models = data.data || [];
-      if (type !== "all") models = models.filter((m) => m.type === type || m.object?.includes(type));
+      const models = data.data || [];
       const list = models.map((m) => `- ${m.id} (${m.type || m.object || "unknown"})`).join("\n");
       return { content: [{ type: "text" as const, text: `Available models (${models.length}):\n${list}` }] };
     }
