@@ -41,11 +41,11 @@
     "ai-tools",
     "generative-ai"
   ],
-  "author": "Venice AI <support@venice.ai>",
+  "author": "glitchenstein",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/veniceai/mcp-server.git"
+    "url": "git+https://github.com/georgeglarson/venice-mcp.git"
   },
   "bugs": {
     "url": "https://github.com/veniceai/mcp-server/issues"
