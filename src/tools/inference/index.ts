@@ -38,13 +38,13 @@ export function registerInferenceTools(server: McpServer): void {
     {
       prompt: z.string().describe("Text description of the image to generate"),
       model: z.string().optional().default("fluently-xl").describe("Image model (e.g., fluently-xl, flux-dev)"),
-      width: z.number().optional().default(1024).describe("Image width in pixels"),
-      height: z.number().optional().default(1024).describe("Image height in pixels"),
+      size: z.string().optional().default("1024x1024").describe("Image size (e.g., 512x512, 1024x1024, 1792x1024)"),
+      
       style_preset: z.string().optional().describe("Style preset name"),
       negative_prompt: z.string().optional().describe("What to avoid in the image"),
     },
-    async ({ prompt, model, width, height, style_preset, negative_prompt }) => {
-      const body: Record<string, unknown> = { model, prompt, width, height, n: 1 };
+    async ({ prompt, model, size, style_preset, negative_prompt }) => {
+      const body: Record<string, unknown> = { model, prompt, size, n: 1, response_format: "b64_json" };
       if (style_preset) body.style_preset = style_preset;
       if (negative_prompt) body.negative_prompt = negative_prompt;
 

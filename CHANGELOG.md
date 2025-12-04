@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-12-04
+
+### Fixed
+- **Image generation API compatibility**: Changed from separate `width`/`height` parameters to combined `size` parameter (e.g., "1024x1024") to match Venice AI API requirements
+- Added `response_format: "b64_json"` to image generation requests
+
 ## [1.1.0] - 2025-12-04
 
 ### 🎉 Major Improvements
