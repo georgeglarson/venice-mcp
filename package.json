@@ -1,6 +1,6 @@
 {
   "name": "venice-mcp",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "description": "MCP server for Venice AI - chat, images, TTS, embeddings, and account management",
   "main": "dist/index.js",
