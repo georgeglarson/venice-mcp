@@ -53,8 +53,16 @@ export function registerInferenceTools(server: McpServer): void {
       if (!response.ok) return { content: [{ type: "text" as const, text: `Error: ${data.error?.message || response.statusText}` }] };
 
       const img = data.data?.[0];
+      if (img?.b64_json) {
+        return {
+          content: [{
+            type: "image" as const,
+            data: img.b64_json,
+            mimeType: "image/png",
+          }],
+        };
+      }
       if (img?.url) return { content: [{ type: "text" as const, text: `Image generated: ${img.url}` }] };
-      if (img?.b64_json) return { content: [{ type: "text" as const, text: `Image (base64, ${img.b64_json.length} chars)` }] };
       return { content: [{ type: "text" as const, text: "Image generated" }] };
     }
   );
