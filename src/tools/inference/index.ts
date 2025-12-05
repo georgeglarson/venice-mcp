@@ -1,7 +1,18 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { writeFileSync, mkdirSync, existsSync } from "fs";
+import { join } from "path";
+import { homedir } from "os";
 import { veniceAPI } from "../../client/venice-api.js";
 import type { ChatCompletionResponse, ImageGenerationResponse, ImageUpscaleResponse, EmbeddingsResponse } from "../../types/api-types.js";
+
+function getImageOutputDir(): string {
+  const dir = join(homedir(), "venice-images");
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true });
+  }
+  return dir;
+}
 
 export function registerInferenceTools(server: McpServer): void {
   // Chat tool
@@ -54,16 +65,19 @@ export function registerInferenceTools(server: McpServer): void {
 
       const img = data.data?.[0];
       if (img?.b64_json) {
+        const outputDir = getImageOutputDir();
+        const filename = `venice-${Date.now()}.png`;
+        const filepath = join(outputDir, filename);
+        writeFileSync(filepath, Buffer.from(img.b64_json, "base64"));
         return {
           content: [{
-            type: "image" as const,
-            data: img.b64_json,
-            mimeType: "image/png",
+            type: "text" as const,
+            text: JSON.stringify({ success: true, path: filepath }),
           }],
         };
       }
-      if (img?.url) return { content: [{ type: "text" as const, text: `Image generated: ${img.url}` }] };
-      return { content: [{ type: "text" as const, text: "Image generated" }] };
+      if (img?.url) return { content: [{ type: "text" as const, text: JSON.stringify({ success: true, url: img.url }) }] };
+      return { content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: "No image data returned" }) }] };
     }
   );
 
